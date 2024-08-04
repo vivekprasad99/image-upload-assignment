@@ -25,7 +25,6 @@ const ImageUpload=({ onUpload })=> {
     setSelectedFile(file);
     setImagePreview(URL.createObjectURL(file));
     setUploadMessage('');
-    const fileName = `${file.name}_${Date.now()}`;
   };
 
   const handleImageUpload = async () => {
