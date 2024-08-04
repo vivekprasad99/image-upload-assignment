@@ -1,33 +1,77 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.file-upload-wrapper {
+  display: flex;
+  align-items: center;
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.file-input {
+  display: none;
+}
+.custom-file-input {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.file-input-button {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.file-input-label {
+  background-color: #fff;
+  padding: 10px 20px;
+}
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+.preview-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.upload-button {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.upload-button:hover {
+  background-color: #005bb5;
+}
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.message-container {
+  margin-top: 20px;
+}
+.upload-message {
+  font-size: 16px;
+  color: green;
 }
