@@ -14,7 +14,7 @@ export default function Home() {
   );
 }
 
-const ImageUpload=({ onUpload })=> {
+const ImageUpload=()=> {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,6 @@ const ImageUpload=({ onUpload })=> {
       .upload(fileName, selectedFile);
 
       if (error) {
-        console.error('Error uploading image:', error);
         setIsLoading(false);
         setUploadMessage('Failed to upload image');
         return;
@@ -54,7 +53,6 @@ const ImageUpload=({ onUpload })=> {
     setUploadMessage('Image has been uploaded');
     setImagePreview(null);
     setSelectedFile(null);
-    if (onUpload) onUpload(url);
   };
 
     return (
