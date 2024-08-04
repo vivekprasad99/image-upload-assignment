@@ -1,113 +1,202 @@
-import Image from "next/image";
+'use client';
+import { supabase } from "../../utils/supabase";
+import { useEffect, useState } from 'react';
+import { Oval } from 'react-loader-spinner';
+// import ImageUpload from './components/ImageUpload';
 
 export default function Home() {
+  
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const { data, error } = await supabase.from('images').select('*');
+      if (error) {
+        console.error('Error fetching images:', error);
+      } else {
+        console.log(data);
+        setImages(data);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+  const handleUpload = (url) => {
+    setImages((prevImages) => [...prevImages, { url }]);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main className="flex min-h-screen flex-col">
+      <div className="main-container">
+      <ImageUpload onUpload={handleUpload}/>
+    </div>
+    <style jsx>{`
+        .main-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px;
+        }
+      `}</style>
     </main>
   );
 }
+
+const ImageUpload=({ onUpload })=> {
+  const [imagePreview, setImagePreview] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setImagePreview(URL.createObjectURL(file));
+    setUploadMessage('');
+    console.log("hi");
+    console.log(file);
+    const fileName = `${file.name}_${Date.now()}`;
+    console.log(fileName);
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedFile) return;
+    setIsLoading(true);
+    console.log("hello");
+    const fileName = `${Date.now()}_${selectedFile.name}`;
+    const { data, error } = await supabase.storage
+      .from('images')
+      .upload(fileName, selectedFile);
+
+      if (error) {
+        console.error('Error uploading image:', error);
+        setIsLoading(false);
+        setUploadMessage('Failed to upload image');
+        return;
+      }
+
+    const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
+    console.log(url);
+    const {success,failure} = await supabase.from('images').insert([{ url:url }]).select();
+
+    if(failure) 
+    {
+      console.error('Error adding image:', failure);
+      return;
+    }
+    setIsLoading(false);
+    setUploadMessage('Image has been uploaded');
+    setImagePreview(null);
+    setSelectedFile(null);
+    if (onUpload) onUpload(url);
+  };
+
+    return (
+      <div className="upload-container">
+        <div className="file-upload-wrapper">
+      <input type="file" accept="image/*" onChange={handleImageChange} id="file-input" className="file-input"/>
+      <label htmlFor="file-input" className="custom-file-input">
+          <span className="file-input-button">Choose File</span>
+          <span className="file-input-label">{selectedFile ? selectedFile.name : 'No file chosen'}</span>
+      </label>
+      </div>
+      {imagePreview && (
+        <div className="preview-container">
+          <img src={imagePreview} alt="Image Preview" className="preview-image" />
+          <button onClick={handleImageUpload} className="upload-button">Upload Image</button>
+        </div>
+      )}
+      {isLoading && (
+        <div className="loader-container">
+          <Oval
+            height={80}
+            width={80}
+            color="#0070f3"
+            secondaryColor="#005bb5"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+      {!isLoading && uploadMessage && (
+        <div className="message-container">
+          <p className="upload-message">{uploadMessage}</p>
+        </div>
+      )}
+      <style jsx>{`
+        .upload-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+        .file-upload-wrapper {
+          display: flex;
+          align-items: center;
+        }
+        .file-input {
+          display: none;
+        }
+        .custom-file-input {
+          display: flex;
+          align-items: center;
+          border: 2px solid #ddd;
+          border-radius: 5px;
+          overflow: hidden;
+        }
+        .file-input-button {
+          background-color: #000;
+          color: #fff;
+          padding: 10px 20px;
+          cursor: pointer;
+        }
+        .file-input-label {
+          background-color: #fff;
+          padding: 10px 20px;
+        }
+        .preview-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 10px;
+        }
+        .preview-image {
+          width: 300px;
+          height: 300px;
+          object-fit: cover;
+          border: 2px solid #ddd;
+          border-radius: 10px;
+          margin-bottom: 10px;
+        }
+        .upload-button {
+          background-color: #0070f3;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        .upload-button:hover {
+          background-color: #005bb5;
+        }
+        .loader-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 20px;
+        }
+        .message-container {
+          margin-top: 20px;
+        }
+        .upload-message {
+          font-size: 16px;
+          color: green;
+        }
+      `}</style>
+    </div>
+    );
+
+  }
