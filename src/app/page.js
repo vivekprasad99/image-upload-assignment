@@ -1,6 +1,6 @@
 'use client';
 import { supabase } from "../../utils/supabase";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 export default function Home() {
@@ -46,7 +46,6 @@ const ImageUpload=()=> {
 
     if(failure) 
     {
-      console.error('Error adding image:', failure);
       return;
     }
     setIsLoading(false);
