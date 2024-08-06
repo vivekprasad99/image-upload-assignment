@@ -1,13 +1,46 @@
 'use client';
 import { supabase } from "../../utils/supabase";
-import { useState } from 'react';
+import {useEffect, useState } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 export default function Home() {
 
+  const [images, setImages] = useState([])
+
+  useEffect(() => { 
+    async function fetchImages() {
+
+      const { data, error } = await supabase
+    .storage
+    .from('images') // replace with your bucket name
+    .list()
+
+    if (error) {
+      console.log({ error: error.message });
+    }
+
+    const imageUrls = data.map(file => {
+      return supabase.storage.from('images').getPublicUrl(file.name).data.publicUrl
+    })
+
+    console.log(imageUrls)
+
+    setImages(imageUrls)
+     }
+
+     fetchImages()
+    
+  }, [])
+
   return (
     <main className="flex min-h-screen flex-col">
       <div className="main-container">
+      <h1>Images</h1>
+      <div>
+        {images.map((url, index) => (
+          <img className="preview-image" key={index} src={url} alt={`Image ${index}`} />
+        ))}
+      </div>
       <ImageUpload/>
     </div>
     </main>
